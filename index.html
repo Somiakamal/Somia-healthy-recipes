@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somia's Healthy Recipes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding: 0;
+            background-color: #000000; 
+            color: #f1f1f1; 
+            scroll-behavior: smooth;
+            background: url(https://img.freepik.com/free-photo/top-view-fresh-ripe-bananas-with-almond-kiwi-fruits-purple-wood-with-copy-space_141793-7498.jpg?semt=ais_hybrid) no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            margin: 0;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-logo img {
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 0.3rem;
+            
+        }
+
+        .hamburger span {
+            background-color: white;
+            height: 3px;
+            width: 25px;
+            border-radius: 2px;
+            /* position: right; */
+        }
+
+        @media (max-width: 770px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: black;
+                width: 100%;
+                padding: 1rem;
+                box-shadow: black;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .header-logo h1 {
+                font-size:1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+                text-align: center;
+            }
+
+            .recipe img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+
+            .recipe-content {
+                padding: 0.8rem;
+            }
+
+            .recipe-title {
+                font-size: 1.4rem;
+            }
+
+            .recipe-description {
+                font-size: 1rem;
+                color: #cccccc;
+            }
+
+            .details-btn, .share-btn {
+                font-size: 1rem;
+                padding: 0.6rem;
+            }
+        }
+
+        .intro {
+            background-color: rgba(51, 51, 51, 0.7);
+            color: #f1f1f1;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        #about.hi {
+            padding: 4rem 1rem;
+            color: #f1f1f1;
+            text-align: center;
+            font-size: larger;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: auto;
+           
+        }
+
+        .recipe {
+            background-color: rgba(26, 26, 26, 0.8);
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .recipe img {
+            width: 45%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .recipe-content {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .recipe-title {
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem;
+            color: #f1f1f1;
+        }
+
+        .recipe-description {
+            font-size: 1rem;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        .details-btn, .share-btn {
+            background-color: black;
+            color: white;
+            border: 1px solid #ccc;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .details-btn:hover, .share-btn:hover {
+            background-color: rgba(51, 51, 51, 0.7);
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-icons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #1da1f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="g.png" alt="Healthy Logo">
+            <h1>Somia's Healthy Recipes</h1>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav>
+            <div class="nav-links" id="navLinks">
+                <a href="#about">About</a>
+                <a href="#recipes">Recipes</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="intro">
+        <h2>Welcome to Somia's Healthy Recipes</h2>
+        <p>Discover a variety of delicious and healthy recipes that fit your lifestyle.</p>
+    </section>
+
+    <section id="about" class="hi">
+        <h2>About Us</h2>
+        <p>At Somia's Healthy Recipes, we believe in promoting health through nutritious and tasty meals.</p>
+    </section>
+
+    <section id="recipes" class="container">
+        <div class="recipe">
+            <img src="hoga 2024-07-23 190815.468.JPG" alt="Healthy Coconut Cake">
+            <div class="recipe-content">
+                <h2 class="recipe-title">Healthy Coconut Cake</h2>
+                <p class="recipe-description">Enjoy a healthy and delicious coconut cake, perfect for a light and nutritious dessert.</p>
+                <button class="details-btn" data-recipe="Healthy Coconut Cake">More details</button>
+                <button class="share-btn" data-recipe="Healthy Coconut Cake">Share</button>
+            </div>
+        </div>
+
+        <div class="recipe">
+            <img src="B2C8A081-B940-4BF9-B542-A6ABE60A552E.jpg" alt="Healthy Cinnamon Oat Cake">
+            <div class="recipe-content">
+                <h2 class="recipe-title">Healthy Cinnamon Oat Cake</h2>
+                <p class="recipe-description">A wholesome and aromatic cinnamon oat cake, perfect for a nutritious breakfast or snack.</p>
+                <button class="details-btn" data-recipe="Healthy Cinnamon Oat Cake">More Details</button>
+                <button class="share-btn" data-recipe="Healthy Cinnamon Oat Cake">Share</button>
+            </div>
+        </div>
+
+        <div class="recipe">
+            <img src="IMG_8586.jpg" alt="Molten Cake">
+            <div class="recipe-content">
+                <h2 class="recipe-title">Molten Cake</h2>
+                <p class="recipe-description">A rich and indulgent molten chocolate cake with a gooey center, perfect for a special treat.</p>
+                <button class="details-btn" data-recipe="Molten Cake">More Details</button>
+                <button class="share-btn" data-recipe="Molten Cake">Share</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions about any recipe? Reach out to us anytime!</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/share/15aibnNfQg/?mibextid=LQQJ4d" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.tiktok.com/@somiakamal_?_t=8s02IXwjvVK&_r=1" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.instagram.com/somiakamal_/profilecard/?igsh=cTlwZ2JleHhid3hy" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </section>
+        <p>Created by Somia Kamal | 2024</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+    
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    
+        const detailButtons = document.querySelectorAll('.details-btn');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const recipeName = button.getAttribute('data-recipe');
+                let message;
+    
+                switch (recipeName) {
+                    case 'Healthy Coconut Cake':
+                        message = "This cake is healthy and suitable for keto and low-carb diets. This cake contains only 176 calories.";
+                        break;
+                    case 'Healthy Cinnamon Oat Cake':
+                        message = "This cake is healthy but not suitable for keto due to its oat content. This cake contains only 230 calories.";
+                        break;
+                    case 'Molten Cake':
+                        message = "This cake is healthy and suitable for all diets except keto. This cake contains only 260 calories.";
+                        break;
+                    default:
+                        message = "Details are not available for this recipe.";
+                }
+    
+                alert(`Details for: ${recipeName}\n${message}`);
+            });
+        });
+    
+        const shareButtons = document.querySelectorAll('.share-btn');
+        shareButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const recipeName = button.getAttribute('data-recipe');
+                const shareUrl = `https://www.example.com/recipes/${recipeName.replace(/ /g, '-').toLowerCase()}`;
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert(`Link copied for sharing: ${shareUrl}`);
+                }).catch(err => {
+                    alert('Failed to copy the link. Please try again!');
+                });
+            });
+        });
+    </script>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
